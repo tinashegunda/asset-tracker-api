@@ -31,6 +31,8 @@ class Asset extends Model
      */
     public function inspections(): HasMany
     {
-        return $this->hasMany(Inspection::class)->orderByDesc('created_at');
+        return $this->hasMany(Inspection::class)
+            ->orderByDesc('created_at')
+            ->orderByDesc('id');
     }
 }

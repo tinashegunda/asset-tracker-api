@@ -31,7 +31,9 @@ class AssetController extends Controller
     public function show(string $id): JsonResponse
     {
         $asset = Asset::with(['inspections' => function ($query) {
-            $query->orderByDesc('created_at')->limit(3);
+            $query->orderByDesc('created_at')
+                  ->orderByDesc('id')
+                  ->limit(3);
         }])->findOrFail($id);
 
         return response()->json($asset);

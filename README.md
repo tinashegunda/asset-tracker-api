@@ -89,6 +89,28 @@ The API will be available at **http://localhost** (port 80) or **http://localhos
 - `./vendor/bin/sail artisan db:seed` – Run seeders
 - `./vendor/bin/sail shell` – Open shell inside app container
 
+## Testing
+
+Run the test suite with:
+
+**With Sail:**
+
+```bash
+./vendor/bin/sail artisan test
+```
+
+**Without Sail:**
+
+```bash
+php artisan test
+```
+
+Or: `composer test`
+
+The test suite uses PHPUnit and includes feature tests for the Asset API (create, validation, unique serial number, status enum, GET with latest 3 inspections, and 404 for missing assets).
+
+> **Note:** Tests use `DB_DATABASE=testing`. With Sail + PostgreSQL, ensure a `testing` database exists, or run migrations against it once (e.g. `./vendor/bin/sail artisan migrate --database=testing` after creating the DB).
+
 ## API Documentation
 
 Base URL: `http://localhost/api` (or `http://localhost:8000/api`)

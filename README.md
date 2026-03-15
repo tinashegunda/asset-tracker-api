@@ -6,27 +6,78 @@ A Laravel REST API for managing **Assets** and their **Inspections**. Each asset
 
 - **Docker Desktop** (Docker + Docker Compose). No PHP or Composer required on the host.
 
+## Environment Setup
+
+When **cloning the repo** (as opposed to using `laravel.build`), you must configure environment variables:
+
+1. **Copy the environment file:**
+
+   ```bash
+   cp .env.example .env
+   ```
+   On Windows: `copy .env.example .env`
+
+2. **Generate the application key** (after Sail is running):
+
+   ```bash
+   ./vendor/bin/sail artisan key:generate
+   ```
+
+   If running locally without Sail: `php artisan key:generate`
+
+3. **Configure database variables** for PostgreSQL via Sail (see [Database Configuration](#database-configuration) below).
+
+Note: Projects created with `laravel.build` already include a configured `.env` file.
+
 ## Installation
 
-### 1. Create the project (if starting fresh)
+### Option A: Fresh project (laravel.build)
 
-```bash
-curl -s "https://laravel.build/asset-tracker?with=pgsql" | bash
-cd asset-tracker
-```
+1. Create the project:
 
-### 2. Start the application
+   ```bash
+   curl -s "https://laravel.build/asset-tracker?with=pgsql" | bash
+   cd asset-tracker
+   ```
 
-```bash
-./vendor/bin/sail up -d
-```
+2. Start the application:
 
-### 3. Run migrations and seed the database
+   ```bash
+   ./vendor/bin/sail up -d
+   ```
 
-```bash
-./vendor/bin/sail artisan migrate
-./vendor/bin/sail artisan db:seed
-```
+3. Run migrations and seed the database:
+
+   ```bash
+   ./vendor/bin/sail artisan migrate
+   ./vendor/bin/sail artisan db:seed
+   ```
+
+### Option B: Clone existing repo
+
+1. Install dependencies:
+
+   ```bash
+   composer install
+   ```
+
+2. Copy `.env.example` to `.env` and configure it (see [Environment Setup](#environment-setup)).
+
+3. If no `docker-compose.yml` exists, run `php artisan sail:install` and select PostgreSQL.
+
+4. Start Sail and generate the key:
+
+   ```bash
+   ./vendor/bin/sail up -d
+   ./vendor/bin/sail artisan key:generate
+   ```
+
+5. Run migrations and seed:
+
+   ```bash
+   ./vendor/bin/sail artisan migrate
+   ./vendor/bin/sail artisan db:seed
+   ```
 
 The API will be available at **http://localhost** (port 80) or **http://localhost:8000** (port 8000).
 
@@ -117,6 +168,23 @@ curl http://localhost/api/assets/1
 **404 Not Found:** Returned when the asset does not exist.
 
 ## Database
+
+### Database Configuration
+
+When using Laravel Sail with PostgreSQL, set these variables in your `.env`:
+
+| Variable        | Value      | Purpose                                  |
+|-----------------|------------|------------------------------------------|
+| `DB_CONNECTION` | `pgsql`    | Use PostgreSQL (not sqlite)              |
+| `DB_HOST`       | `pgsql`    | Sail Docker service name (not 127.0.0.1) |
+| `DB_PORT`       | `5432`     | PostgreSQL port                          |
+| `DB_DATABASE`   | `laravel`  | Database name                            |
+| `DB_USERNAME`   | `sail`     | Default Sail DB user                     |
+| `DB_PASSWORD`   | `password` | Default Sail DB password                 |
+
+`DB_HOST=pgsql` references the Docker service name so the app container can reach PostgreSQL on the Docker network.
+
+### Schema
 
 - **PostgreSQL** (via Laravel Sail)
 - **Assets:** `name`, `serial_number`, `status`

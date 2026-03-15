@@ -86,7 +86,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="https://github.com" target="_blank" class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal">
+                            <a href="https://github.com/tinashegunda/asset-tracker-api" target="_blank" class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal">
                                 README
                             </a>
                         </li>
